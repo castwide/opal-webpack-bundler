@@ -74,14 +74,14 @@ import './example.rb'
 
 * If you use Bundler, your Gemfile should be in your project's root directory (the same directory as package.json).
 * The loader excludes the Ruby corelib by default. You probably want to include it explicitly in your Ruby code via `require 'opal'` unless you're loading it some other way.
-* If your project imports multiple Ruby scripts, each one is compiled separately, so if you have the same paths required in multiple files, the required code might be compiled and
+* If your project imports multiple Ruby scripts, each one is compiled separately, so if you have the same paths required in multiple files, the required code might get compiled and
   loaded multiple times. It's best to import a single Ruby script that loads all of your required libraries from one place.
 * Refer to the [Opal documentation](http://opalrb.com/docs/) for more information, including how to reference Ruby code from JavaScript and vice versa.
 
 ## Known Issues
 
 * Source maps are not supported.
-* `require_relative` does not work (see https://github.com/opal/opal/issues/1634).
+* `require_relative` does not always work as expected (see https://github.com/opal/opal/issues/1634).
 
 ## To Do
 
