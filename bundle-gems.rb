@@ -1,5 +1,6 @@
-require 'bundler'
-deps = Bundler.require
-deps.each do |dep|
-  puts dep.name
+require 'bundler/setup'
+
+gems = Bundler.rubygems
+gems.all_specs.each do |spec|
+  puts spec.name
 end
