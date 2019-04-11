@@ -26,10 +26,13 @@ var getBundledGems = function (options) {
 var compileScript = function (gems, file, options) {
     return new Promise((resolve, reject) => {
         let cmd = 'opal';
-        let args = ['-c', '--no-opal'];
+        let args = ['-c'];
         if (options.useBundler) {
             cmd = 'bundle'
-            args = ['exec', 'opal', '-c', '--no-opal'];
+            args = ['exec', 'opal', '-c'];
+        }
+        if (options.withoutOpal) {
+            args.push('--no-opal');
         }
         gems.forEach((g) => {
             if (g != 'opal') {
