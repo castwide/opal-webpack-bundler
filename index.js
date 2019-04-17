@@ -1,6 +1,7 @@
 const path = require('path');
 const ChildProcess = require('child_process');
 const LoaderUtils = require('loader-utils');
+const shellEscape = require('shell-escape');
 
 var getBundledGems = function (options) {
     return new Promise((resolve, reject) => {
@@ -25,27 +26,28 @@ var getBundledGems = function (options) {
 
 var compileScript = function (gems, file, options) {
     return new Promise((resolve, reject) => {
-        let cmd = 'opal';
-        let args = ['-c'];
+        let cmd = 'ruby';
+        let args = [`"${path.resolve(__dirname, 'compile-opal.rb')}"`];
         if (options.useBundler) {
             cmd = 'bundle'
-            args = ['exec', 'opal', '-c'];
+            args = ['exec', 'ruby', `"${path.resolve(__dirname, 'compile-opal.rb')}"`];
         }
-        if (options.withoutOpal) {
-            args.push('--no-opal');
-        }
+        let data = {};
+        data.gems = [];
         gems.forEach((g) => {
-            if (g != 'opal') {
-                args.push('-g', g);
-            }
+            data.gems.push(g);
         });
         (options.gems || []).forEach((g) => {
-            args.push('-g', `"${g}"`);
+            data.gems.push(g);
         });
+        data.paths = [];
         (options.paths || []).forEach((p) => {
-            args.push('-I', `"${p}"`);
+            data.paths.push(p);
         });
-        args.push(`"${file}"`);
+        data.file = file;
+        data.relative = path.relative(options.root, file);
+        data.sourcemap = !!options.sourceMap;
+        args.push(shellEscape([JSON.stringify(data)]));
         let child = ChildProcess.spawn(cmd, args, { shell: true, env: process.env });
         let result = '';
         child.stdout.on('data', (buffer) => {
@@ -56,7 +58,7 @@ var compileScript = function (gems, file, options) {
         });
         child.on('exit', (status) => {
             if (status == 0) {
-                resolve(result);
+                resolve(JSON.parse(result));
             } else {
                 reject(new Error('Opal exited with status ' + status));
             }
@@ -64,15 +66,17 @@ var compileScript = function (gems, file, options) {
     });
 }
 
-module.exports = function (source) {
-    var file = LoaderUtils.interpolateName(this, "[path][name].[ext]", {
-        source
-    }).toString();
+module.exports = function (_source) {
+    let file = this.resourcePath;
     let options = LoaderUtils.getOptions(this);
     return new Promise((resolve, reject) => {
         getBundledGems(options).then((gems) => {
             return compileScript(gems, file, options).then((result) => {
-                resolve(result);
+                if (result.length == 1) {
+                    resolve(result[0]);
+                } else {
+                    resolve(result[0], result[1]);
+                }
             }).catch((error) => {
                 reject(error);
             });
