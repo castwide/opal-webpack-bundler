@@ -6,6 +6,7 @@
   "files": [
     "index.js",
     "bundle-gems.rb",
+    "compile-opal.rb",
     "README.md",
     "LICENSE"
   ],
