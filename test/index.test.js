@@ -1,6 +1,6 @@
 import compiler from './compiler.js';
 
-test('Inserts name and outputs JavaScript', async () => {
+test('Compiles a simple Ruby script', async () => {
   jest.setTimeout(10000);
   const stats = await compiler('simple.rb');
   const output = stats.toJson().modules[0].source;
