@@ -1,6 +1,6 @@
 {
   "name": "opal-webpack-bundler",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "A Webpack loader for compiling Ruby to JavaScript",
   "main": "index.js",
   "files": [
@@ -9,6 +9,9 @@
     "README.md",
     "LICENSE"
   ],
+  "scripts": {
+    "test": "jest"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/castwide/opal-webpack-bundler.git"
@@ -19,5 +22,11 @@
     "loader-utils": "^1.2.3",
     "shell-escape": "^0.2.0"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "babel-jest": "^24.7.1",
+    "babel-preset-env": "^1.7.0",
+    "jest": "^24.7.1",
+    "memory-fs": "^0.4.1",
+    "webpack": "^4.30.0"
+  }
 }

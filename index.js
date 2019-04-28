@@ -45,7 +45,7 @@ var compileScript = function (gems, file, options) {
             data.paths.push(p);
         });
         data.file = file;
-        data.relative = path.relative(options.root, file);
+        data.relative = path.relative(options.root || '', file);
         data.sourcemap = !!options.sourceMap;
         args.push(shellEscape([JSON.stringify(data)]));
         let child = ChildProcess.spawn(cmd, args, { shell: true, env: process.env });

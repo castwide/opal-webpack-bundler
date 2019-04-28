@@ -69,10 +69,10 @@ import './example.rb'
 * `useBundler`: Automatically make bundled gems available
 * `gems`: An array of additional gems to make available
 * `paths`: An array of additional load paths to make available
-* `withoutOpal`: Disable implicit `require 'opal'` (default is false)
 
 ## Recommendations
 
+* Ruby code should include `require 'opal'` to import the Ruby corelib.
 * If you use Bundler, your Gemfile should be in your project's root directory (the same directory as package.json).
 * If your project imports multiple Ruby scripts, each one is compiled separately, so if you have the same paths required in multiple files, the required code might get compiled and
   loaded multiple times. It's best to import a single Ruby script that loads all of your required libraries from one place.
