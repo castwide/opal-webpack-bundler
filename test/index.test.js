@@ -20,10 +20,15 @@ test('Compiles with Opal', async () => {
   const stats = await compiler('opal.rb');
   const output = stats.toJson().modules[0].source;
   expect(output).toContain('Hello, Opal!');
+  jest.setTimeout(5000);
 });
 
 test('Catches syntax errors', async () => {
-  jest.setTimeout(10000);
   const stats = await compiler('error.rb');
+  expect(stats.hasErrors()).toEqual(true);
+});
+
+test('Catches unresolved requires', async () => {
+  const stats = await compiler('badpath.rb');
   expect(stats.hasErrors()).toEqual(true);
 });
