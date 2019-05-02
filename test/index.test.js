@@ -17,9 +17,13 @@ test('Compiles with a custom load path', async () => {
 
 test('Compiles with Opal', async () => {
   jest.setTimeout(10000);
-  const stats = await compiler('opal.rb', {
-    paths: [path.resolve(__dirname, 'fixtures')]
-  });
+  const stats = await compiler('opal.rb');
   const output = stats.toJson().modules[0].source;
   expect(output).toContain('Hello, Opal!');
+});
+
+test('Catches syntax errors', async () => {
+  jest.setTimeout(10000);
+  const stats = await compiler('error.rb');
+  expect(stats.hasErrors()).toEqual(true);
 });
