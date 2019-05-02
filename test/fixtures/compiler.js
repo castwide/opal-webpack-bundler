@@ -6,28 +6,23 @@ export default (fixture, options = {}) => {
   const compiler = webpack({
     mode: 'none',
     context: __dirname,
-    entry: `./${fixture}`,
+    entry: path.resolve(__dirname, fixture),
     output: {
       path: path.resolve(__dirname),
       filename: 'bundle.js',
     },
     module: {
         rules: [
-            {
+              {
                 // opal-webpack-bundler will compile and include ruby files in the pack
                 test: /\.rb$/,
                 use: [
-                {
-                    loader: path.resolve(__dirname, '..', './index.js'),
-                    options: {
-                    // Set useBundler to false if your project does not have a Gemfile
-                    useBundler: false,
-                    gems: [],
-                    paths: []
-                    }
-                }
+                  {
+                    loader: path.resolve(__dirname, '..', '..', './index.js'),
+                    options: options
+                  }
                 ]
-            }
+              }
             ]
         }
     });
