@@ -15,6 +15,13 @@ test('Compiles with a custom load path', async () => {
   expect(output).toContain('Required script');
 });
 
+// TODO: require_relative does not work from the top-level file
+// test('Compiles with require_relative', async () => {
+//   const stats = await compiler('relative.rb');
+//   const output = stats.toJson().modules[0].source;
+//   expect(output).toContain('Required script');
+// });
+
 test('Compiles with Opal', async () => {
   jest.setTimeout(10000);
   const stats = await compiler('opal.rb');
