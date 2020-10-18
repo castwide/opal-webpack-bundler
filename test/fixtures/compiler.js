@@ -34,7 +34,7 @@ export default (fixture, options = {}) => {
     compiler.run((err, stats) => {
       if (err) reject(err);
       var file = Object.values(vol.toJSON())[0];
-      stats.file = file;
+      stats.output = file;
       resolve(stats);
     });
   });
