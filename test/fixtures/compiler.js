@@ -1,6 +1,7 @@
 import path from 'path';
 import webpack from 'webpack';
-import memoryfs from 'memory-fs';
+// import memoryfs from 'memory-fs';
+import { vol } from 'memfs';
 
 export default (fixture, options = {}) => {
   const compiler = webpack({
@@ -27,13 +28,13 @@ export default (fixture, options = {}) => {
         }
     });
 
-  compiler.outputFileSystem = new memoryfs();
+  compiler.outputFileSystem = vol;
 
   return new Promise((resolve, reject) => {
     compiler.run((err, stats) => {
       if (err) reject(err);
-      // console.dir(stats);
-      // if (stats.hasErrors()) reject(new Error(stats.toJson().errors));
+      var file = Object.values(vol.toJSON())[0];
+      stats.file = file;
       resolve(stats);
     });
   });
