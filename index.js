@@ -46,8 +46,10 @@ var compileScript = function (gems, file, options) {
         });
         data.file = file;
         data.relative = path.relative(options.root || '', file);
+        data.root = options.root;
         data.sourcemap = !!options.sourceMap;
         args.push(shellEscape([JSON.stringify(data)]));
+        console.log(data);
         let child = ChildProcess.spawn(cmd, args, { shell: true, env: process.env });
         let result = '';
         child.stdout.on('data', (buffer) => {
@@ -66,17 +68,15 @@ var compileScript = function (gems, file, options) {
     });
 }
 
-module.exports = function (_source) {
+module.exports = function(_source) {
     let file = this.resourcePath;
     let options = LoaderUtils.getOptions(this);
     return new Promise((resolve, reject) => {
         getBundledGems(options).then((gems) => {
             return compileScript(gems, file, options).then((result) => {
-                if (result.length == 1) {
-                    resolve(result[0]);
-                } else {
-                    resolve(result[0], result[1]);
-                }
+                console.log(typeof result[1]);
+                console.log(result[1]);
+                resolve(result[0], JSON.parse(result[1]));
             }).catch((error) => {
                 reject(error);
             });

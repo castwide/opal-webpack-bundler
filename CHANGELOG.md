@@ -1,3 +1,9 @@
+## 0.3.0
+- Incremental compiler
+
+## 0.2.0 - February 2, 2022
+- Update babel-jest
+
 ## 0.1.1 - February 1, 2022
 - Package updates
 
