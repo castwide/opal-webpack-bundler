@@ -9,12 +9,12 @@ class OpalWebpackBundler
   end
 
   def process
-    opal = Opal::Builder.new
-    opal.append_paths *@paths
+    builder = Opal::Builder.new
+    builder.append_paths *@paths
     @gems.each do |gem|
-      opal.use_gem gem
+      builder.use_gem gem
     end
-    opal.build_str File.read(@file), @relative, requirable: false
-    { source: opal.to_s, source_map: opal.source_map.as_json, files: opal.dependent_files }
+    builder.build_str File.read(@file), @relative, load: false
+    { source: builder.to_s, source_map: builder.source_map.as_json, files: builder.dependent_files }
   end
 end
