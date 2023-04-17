@@ -49,7 +49,6 @@ var compileScript = function (gems, file, options) {
         data.root = options.root;
         data.sourcemap = !!options.sourceMap;
         args.push(shellEscape([JSON.stringify(data)]));
-        console.log(data);
         let child = ChildProcess.spawn(cmd, args, { shell: true, env: process.env });
         let result = '';
         child.stdout.on('data', (buffer) => {
@@ -74,9 +73,7 @@ module.exports = function(source, map, meta) {
     return new Promise((resolve, reject) => {
         getBundledGems(options).then((gems) => {
             return compileScript(gems, file, options).then((result) => {
-                console.log(result.files);
                 const fixedRoot = options.root.replace(/\\/g, '/');
-                console.log(`The goddamn fixed root: ${fixedRoot}`);
                 result.files.filter((file) => {
                     return file.startsWith(fixedRoot) && file != fixedRoot;
                 }).map((file) => {
