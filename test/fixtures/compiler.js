@@ -20,7 +20,13 @@ export default (fixture, options = {}) => {
                 use: [
                   {
                     loader: path.resolve(__dirname, '..', '..', './index.js'),
-                    options: options
+                    options: Object.assign(
+                      {
+                        paths: [path.resolve(__dirname)],
+                        root: path.resolve(__dirname)
+                      },
+                      options
+                    )
                   }
                 ]
               }
