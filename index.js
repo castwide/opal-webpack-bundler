@@ -68,15 +68,28 @@ var compileScript = function (gems, file, options) {
     });
 }
 
-module.exports = function(_source) {
+module.exports = function(source, map, meta) {
     let file = this.resourcePath;
     let options = LoaderUtils.getOptions(this);
     return new Promise((resolve, reject) => {
         getBundledGems(options).then((gems) => {
             return compileScript(gems, file, options).then((result) => {
-                console.log(typeof result[1]);
-                console.log(result[1]);
-                resolve(result[0], JSON.parse(result[1]));
+                console.log(result.files);
+                const fixedRoot = options.root.replace(/\\/g, '/');
+                console.log(`The goddamn fixed root: ${fixedRoot}`);
+                result.files.filter((file) => {
+                    return file.startsWith(fixedRoot) && file != fixedRoot;
+                }).map((file) => {
+                    return path.normalize(file);
+                }).forEach((file) => {
+                    this.addDependency(file);
+                });
+                result.source_map.sections.forEach((sec) => {
+                    sec.map.sources.forEach((src, idx) => {
+                        sec.map.sources[idx] = path.normalize(src);
+                    });
+                });
+                resolve(result.source, result.source_map);
             }).catch((error) => {
                 reject(error);
             });
