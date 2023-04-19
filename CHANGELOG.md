@@ -1,5 +1,5 @@
 ## 0.3.0
-- Incremental compiler
+- Refactoring
 
 ## 0.2.0 - February 2, 2022
 - Update babel-jest

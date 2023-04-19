@@ -14,7 +14,7 @@ class OpalWebpackBundler
     @gems.each do |gem|
       builder.use_gem gem
     end
-    builder.build_str File.read(@file), @relative, load: false
+    builder.build @file
     { source: builder.to_s, source_map: builder.source_map.as_json, files: builder.dependent_files }
   end
 end

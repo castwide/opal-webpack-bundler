@@ -67,12 +67,15 @@ var compileScript = function (gems, file, options) {
     });
 }
 
-module.exports = function(source, map, meta) {
+module.exports = function (source, map, meta) {
     let file = this.resourcePath;
     let options = LoaderUtils.getOptions(this);
     return new Promise((resolve, reject) => {
         getBundledGems(options).then((gems) => {
             return compileScript(gems, file, options).then((result) => {
+                // @todo This section informs Webpack of the Ruby project's
+                //   dependencies. It might not be strictly necessary, or there
+                //   might be a better to do it.
                 const fixedRoot = options.root.replace(/\\/g, '/');
                 result.files.filter((file) => {
                     return file.startsWith(fixedRoot) && file != fixedRoot;
@@ -81,11 +84,9 @@ module.exports = function(source, map, meta) {
                 }).forEach((file) => {
                     this.addDependency(file);
                 });
-                result.source_map.sections.forEach((sec) => {
-                    sec.map.sources.forEach((src, idx) => {
-                        sec.map.sources[idx] = path.normalize(src);
-                    });
-                });
+                // @todo This is the correct way to send a source map from a
+                //   loader, but Webpack isn't able to use the ones that Opal
+                //   generates.
                 resolve(result.source, result.source_map);
             }).catch((error) => {
                 reject(error);
