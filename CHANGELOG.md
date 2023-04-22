@@ -1,4 +1,7 @@
-## 0.2.0 - February 2, 2022
+## 0.2.1 - April 22, 2023
+- Missing file
+
+## 0.2.0 - April 22, 2023
 - Package updates
 - Refactoring
 

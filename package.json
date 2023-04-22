@@ -1,12 +1,13 @@
 {
   "name": "opal-webpack-bundler",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "A Webpack loader for compiling Ruby to JavaScript",
   "main": "index.js",
   "files": [
     "index.js",
     "bundle-gems.rb",
     "compile-opal.rb",
+    "opal_webpack_bundler.rb",
     "README.md",
     "LICENSE"
   ],
