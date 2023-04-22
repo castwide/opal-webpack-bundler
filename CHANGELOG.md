@@ -1,8 +1,6 @@
-## 0.3.0
-- Refactoring
-
 ## 0.2.0 - February 2, 2022
-- Update babel-jest
+- Package updates
+- Refactoring
 
 ## 0.1.1 - February 1, 2022
 - Package updates
