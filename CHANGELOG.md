@@ -1,3 +1,6 @@
+## 0.3.0 - July 23, 2026
+- all_specs -> installed_specs
+
 ## 0.2.1 - April 22, 2023
 - Missing file
 
