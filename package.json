@@ -25,9 +25,9 @@
     "shell-escape": "^0.2.0"
   },
   "devDependencies": {
+    "@babel/preset-env": "^7.0.0",
     "babel-jest": "^27.4.6",
-    "babel-preset-env": "^1.7.0",
-    "jest": "^26.5.3",
+    "jest": "^30.4.2",
     "memfs": "^3.2.0",
     "webpack": "^5.1.3"
   }

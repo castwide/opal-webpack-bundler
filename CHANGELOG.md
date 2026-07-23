@@ -1,5 +1,6 @@
 ## 0.3.0 - July 23, 2026
 - all_specs -> installed_specs
+- Dependency updates
 
 ## 0.2.1 - April 22, 2023
 - Missing file
